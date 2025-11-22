@@ -1,25 +1,29 @@
 const express = require('express');
 const router = express.Router();
 const {
-  getAllGames,
-  getGameById,
-  createGame,
-  updateGame,
-  deleteGame,
-  filterGames,
-  getStatistics
+  getAllGames,
+  getGameById,
+  createGame,
+  updateGame,
+  deleteGame,
+  filterGames,
+  getStatistics
 } = require('../controllers/gameController');
 
-// CRUD básico
+// 1. ENDPOINTS ESPECÍFICOS (DEBEN IR PRIMERO)
+// /api/juegos/estadisticas
+router.get('/estadisticas', getStatistics); 
+// /api/juegos/filter?genero=Aventura&...
+router.get('/filter', filterGames); 
+
+// 2. CRUD BÁSICO Y RUTAS DINÁMICAS
+// /api/juegos
 router.get('/', getAllGames);
-router.get('/:id', getGameById);
 router.post('/', createGame);
+
+// /api/juegos/:id (Debe ir al final para que no capture las rutas anteriores)
+router.get('/:id', getGameById);
 router.put('/:id', updateGame);
 router.delete('/:id', deleteGame);
 
-// Endpoints extra
-router.get('/filter', filterGames); // Filtros por género, plataforma, completado
-router.get('/estadisticas', getStatistics); // Dashboard estadístico
-
 module.exports = router;
-

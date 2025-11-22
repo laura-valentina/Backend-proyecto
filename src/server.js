@@ -2,12 +2,16 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db'); // función para conectar a MongoDB
+const cors = require('cors'); // <-- Importamos el módulo CORS
 
 // 2. Configurar variables de entorno
 dotenv.config();
 
 // 3. Inicializar app
 const app = express();
+
+app.use(cors()); // <-- IMPLEMENTACIÓN: Esto permite conexiones desde cualquier origen
+app.use(express.json());
 
 // 4. Middleware
 app.use(express.json());
